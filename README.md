@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Appendiceal Cancer — nodal risk calculator
 
-## Getting Started
+**What you are looking at:** A draft web tool that turns age, sex, T stage, grade, and lymphovascular invasion into a **single estimated probability** of regional nodal disease. It is for **conversation and teaching**, not a standalone decision device.
 
-First, run the development server:
+**Status:** Not validated for patient care. Model coefficients still need to be transcribed from the paper, checked, and clinically approved by your group.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**If you are updating the model from the manuscript:**  
+One file holds the numbers: `src/features/nodal-calculator/model/model-parameter-setup.ts`. Search inside it for **MODEL PARAMETER SET UP** and change **only** the digits in the block marked **YOU EDIT HERE**. Everything else in that file is labels or background notes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**How the project folder is laid out (Next.js — this is normal):**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Location | Role |
+| -------- | ---- |
+| `src/features/nodal-calculator/` | This calculator only: forms, results, risk math wiring |
+| `src/app/` | Pages users open and the small API behind “calculate” |
+| `src/components/` | Shared UI pieces (buttons, cards, etc.) |
+| `public/` | Static images/icons |
+| `package.json`, `next.config.ts`, `eslint.config.mjs`, … | Build tools — ignore for clinical work |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Internal agent notes live in `docs/engineering/` and are not part of the product.
 
-## Learn More
+**Source model:** Day RW et al., *Ann Surg* 2021;274(1):155–161 — [PubMed](https://pubmed.ncbi.nlm.nih.gov/31361626/).
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Run on your machine (for staff who support the site):** in this directory, `npm install` then `npm run dev`, then open http://localhost:3000
