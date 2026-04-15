@@ -31,7 +31,7 @@ const controlClassName =
   "h-11 rounded-lg border-border bg-card px-3 text-base shadow-xs md:text-sm"
 const choiceGroupClassName = "grid w-full gap-2"
 const choiceLabelClassName =
-  "h-11 min-w-0 rounded-lg border-border bg-card px-2 text-sm font-medium aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+  "h-11 min-w-0 rounded-lg border-border bg-card px-3.5 text-sm font-medium aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
 
 export function NodalCalculator() {
   const [result, setResult] = useState<PredictionResult | null>(null)
@@ -68,7 +68,7 @@ export function NodalCalculator() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_25rem] lg:items-start">
+    <div className="mx-auto grid w-full max-w-md gap-6 sm:max-w-lg md:max-w-2xl lg:max-w-4xl lg:grid-cols-[minmax(0,28rem)_22rem] lg:items-start xl:max-w-5xl xl:grid-cols-[minmax(0,30rem)_24rem]">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 motion-safe:animate-[fade-up_520ms_ease-out_80ms_both]"
@@ -316,7 +316,7 @@ export function NodalCalculator() {
         ) : null}
       </form>
 
-      <aside className="motion-safe:animate-[fade-up_520ms_ease-out_160ms_both] lg:sticky lg:top-6">
+      <aside className="min-w-0 motion-safe:animate-[fade-up_520ms_ease-out_160ms_both] lg:sticky lg:top-6">
         <ResultPanel result={result} />
       </aside>
     </div>

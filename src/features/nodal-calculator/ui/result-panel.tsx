@@ -23,7 +23,7 @@ export function ResultPanel({ result }: ResultPanelProps) {
       <Card
         aria-labelledby="result-heading"
         aria-live="polite"
-        className="rounded-lg shadow-xs"
+        className="min-w-0 rounded-lg shadow-xs"
       >
         <CardHeader>
           <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
@@ -60,7 +60,7 @@ export function ResultPanel({ result }: ResultPanelProps) {
     <Card
       aria-labelledby="result-heading"
       aria-live="polite"
-      className="rounded-lg border-primary/25 shadow-sm"
+      className="min-w-0 rounded-lg border-primary/25 shadow-sm"
     >
       <CardHeader>
         <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
@@ -70,16 +70,22 @@ export function ResultPanel({ result }: ResultPanelProps) {
       </CardHeader>
 
       <CardContent className="space-y-5">
-        <div>
+        <div className="min-w-0">
           <p className="text-6xl font-semibold tracking-tight text-foreground tabular-nums">
             {pct}%
           </p>
           {result.modelStatus === "specification_pending_verification" ? (
-            <Badge variant="secondary" className="mt-3">
+            <Badge
+              variant="secondary"
+              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start"
+            >
               Implementation: verify coefficient correspondence with the primary publication.
             </Badge>
           ) : (
-            <Badge variant="secondary" className="mt-3">
+            <Badge
+              variant="secondary"
+              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start"
+            >
               Coefficients per primary publication table.
             </Badge>
           )}

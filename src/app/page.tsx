@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex min-h-svh flex-col bg-background">
       <header className="border-b border-border bg-card">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:px-8">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:px-8">
           <div className="min-w-0 flex-1 space-y-3">
             <div className="flex flex-wrap gap-2">
               <Badge variant="outline">Appendiceal Cancer Nodal Risk Assessment Calculator</Badge>
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-7 px-4 py-7 sm:px-6 lg:px-8">
+      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-7 px-4 py-7 sm:px-6 lg:px-8">
         <NodalCalculator />
 
         <AppFooter />
