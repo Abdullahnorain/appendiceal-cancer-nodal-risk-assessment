@@ -21,8 +21,8 @@ function logistic(logit: number) {
 }
 
 export const logisticNodalRiskModel: NodalRiskModel = {
-  version: "logistic-nodal-draft-0.1",
-  status: "draft",
+  version: "logistic-nodal-ann-surg-2021-0.1",
+  status: "specification_pending_verification",
   predictProbability(input: ModelInput) {
     let logit = LOGISTIC_INTERCEPT
     logit += (input.ageYears - AGE_CENTER_YEARS) * AGE_LOG_ODDS_PER_YEAR

@@ -74,13 +74,13 @@ export function ResultPanel({ result }: ResultPanelProps) {
           <p className="text-6xl font-semibold tracking-tight text-foreground tabular-nums">
             {pct}%
           </p>
-          {result.modelStatus === "draft" ? (
+          {result.modelStatus === "specification_pending_verification" ? (
             <Badge variant="secondary" className="mt-3">
-              Draft coefficients—risk tiers not defined
+              Implementation: verify coefficient correspondence with the primary publication.
             </Badge>
           ) : (
             <Badge variant="secondary" className="mt-3">
-              Publication-aligned model
+              Coefficients per primary publication table.
             </Badge>
           )}
         </div>
@@ -117,9 +117,9 @@ export function ResultPanel({ result }: ResultPanelProps) {
           <div className="flex items-center justify-between gap-4">
             <dt className="text-muted-foreground">Model status</dt>
             <dd className="text-right font-medium text-foreground">
-              {result.modelStatus === "publication_aligned"
-                ? "Publication-aligned implementation"
-                : "Draft implementation"}
+              {result.modelStatus === "manuscript_concordant"
+                ? "Manuscript-concordant implementation"
+                : "Pending verification against publication tables"}
             </dd>
           </div>
         </dl>

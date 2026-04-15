@@ -67,5 +67,5 @@ export const MALE_VERSUS_FEMALE_LOG_ODDS = 0.08
 // --- Reference (read only; does not change the app) ---
 // Source: Day RW et al., Ann Surg 2021;274(1):155-161.
 // DOI: 10.1097/SLA.0000000000003501 | PubMed: https://pubmed.ncbi.nlm.nih.gov/31361626/
-// Fill in manuscript table/appendix when coefficients are transcribed: ___________
+// Confirm each coefficient against the primary publication tables before marking the model manuscript_concordant in logistic-nodal-model.ts.
 // New form answers need a developer to add a row above — do not invent numbers.

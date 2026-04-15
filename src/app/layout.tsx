@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Nodal metastasis risk | Appendiceal cancer",
   description:
-    "Draft educational tool: estimated regional nodal involvement probability from registry-based literature (not for standalone clinical decisions).",
+    "Web implementation of the Day et al. (Ann Surg 2021) nodal logistic model: estimated probability of regional nodal involvement from published coefficients (not a medical device; not for isolated clinical decisions).",
 };
 
 export default function RootLayout({

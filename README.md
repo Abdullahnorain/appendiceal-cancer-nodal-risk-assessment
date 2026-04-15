@@ -1,8 +1,8 @@
 # Appendiceal Cancer — nodal risk calculator
 
-**What you are looking at:** A draft web tool that turns age, sex, T stage, grade, and lymphovascular invasion into a **single estimated probability** of regional nodal disease. It is for **conversation and teaching**, not a standalone decision device.
+**Description:** Web implementation of the logistic model reported by Day et al. (*Ann Surg* 2021). It yields a single estimated probability of regional nodal disease from age, sex, T category, grade, and lymphovascular invasion. Intended for teaching and multidisciplinary discussion; not a stand-alone therapeutic decision instrument.
 
-**Status:** Not validated for patient care. Model coefficients still need to be transcribed from the paper, checked, and clinically approved by your group.
+**Status:** Model development, validation, performance, and cohort definitions are reported in the primary publication. This software is not a medical device, is not FDA-cleared, and has not undergone independent prospective validation. Tabulated coefficients in the manuscript remain the reference; confirm local implementation before clinical application.
 
 **If you are updating the model from the manuscript:**  
 One file holds the numbers: `src/features/nodal-calculator/model/model-parameter-setup.ts`. Search inside it for **MODEL PARAMETER SET UP** and change **only** the digits in the block marked **YOU EDIT HERE**. Everything else in that file is labels or background notes.
@@ -12,7 +12,7 @@ One file holds the numbers: `src/features/nodal-calculator/model/model-parameter
 | Location | Role |
 | -------- | ---- |
 | `src/features/nodal-calculator/` | This calculator only: forms, results, risk math wiring |
-| `src/app/` | Pages users open and the small API behind “calculate” |
+| `src/app/` | Pages users open and the small API behind "calculate" |
 | `src/components/` | Shared UI pieces (buttons, cards, etc.) |
 | `public/` | Static images/icons |
 | `package.json`, `next.config.ts`, `eslint.config.mjs`, … | Build tools — ignore for clinical work |

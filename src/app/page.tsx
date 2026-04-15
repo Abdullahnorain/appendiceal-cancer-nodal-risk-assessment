@@ -18,7 +18,7 @@ export default function Home() {
               Nodal Metastasis Risk Assessment in Appendiceal Cancer Patients
             </h1>
             <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
-              Refer to the publication for additional information regarding the model validation.
+              Derivation, validation, and performance metrics are reported in the primary publication.
             </p>
           </div>
 

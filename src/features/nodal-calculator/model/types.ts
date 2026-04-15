@@ -5,8 +5,13 @@ import type {
   TStageValue,
 } from "./options"
 
-/** draft: coefficients not finalized; publication_aligned: aligned with agreed manuscript table */
-export type ModelStatus = "draft" | "publication_aligned"
+/**
+ * specification_pending_verification: implementation not yet audited against publication tables.
+ * manuscript_concordant: coefficients verified against the primary publication.
+ */
+export type ModelStatus =
+  | "specification_pending_verification"
+  | "manuscript_concordant"
 
 export type ModelInput = {
   ageYears: number
