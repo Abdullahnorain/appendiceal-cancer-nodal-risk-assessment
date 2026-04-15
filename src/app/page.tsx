@@ -12,7 +12,7 @@ export default function Home() {
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:px-8">
           <div className="min-w-0 flex-1 space-y-3">
             <div className="flex flex-wrap gap-2">
-              <Badge variant="outline">Appendiceal Cancer Nodal Risk Assessment</Badge>
+              <Badge variant="outline">Appendiceal Cancer Nodal Risk Assessment Calculator</Badge>
             </div>
             <h1 className="text-balance text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Nodal Metastasis Risk Assessment in Appendiceal Cancer Patients

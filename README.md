@@ -1,4 +1,4 @@
-# Appendiceal Cancer — nodal risk calculator
+# Appendiceal Cancer Nodal Risk Assessment Calculator
 
 **Description:** Web implementation of the logistic model reported by Day et al. (*Ann Surg* 2021). It yields a single estimated probability of regional nodal disease from age, sex, T category, grade, and lymphovascular invasion. Intended for teaching and multidisciplinary discussion; not a stand-alone therapeutic decision instrument.
 

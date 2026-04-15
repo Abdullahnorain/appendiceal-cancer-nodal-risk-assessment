@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nodal metastasis risk | Appendiceal cancer",
+  title: "Appendiceal Cancer Nodal Risk Assessment Calculator | Appendiceal cancer",
   description:
     "Web implementation of the Day et al. (Ann Surg 2021) nodal logistic model: estimated probability of regional nodal involvement from published coefficients (not a medical device; not for isolated clinical decisions).",
 };
