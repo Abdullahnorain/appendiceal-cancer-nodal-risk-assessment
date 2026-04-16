@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Microscope, User } from "lucide-react"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 
@@ -11,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   ToggleGroup,
@@ -27,14 +27,17 @@ import type { PredictionResult } from "../model/types"
 
 import { ResultPanel } from "./result-panel"
 
-const controlClassName =
-  "h-11 rounded-lg border-border bg-card px-3 text-base shadow-xs md:text-sm"
 const choiceGroupClassName = "grid w-full gap-2"
 const choiceLabelClassName =
-  "h-11 min-w-0 rounded-lg border-border bg-card px-3.5 text-sm font-medium aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+  "h-11 min-w-0 rounded-lg border-border bg-card px-3.5 text-sm font-medium transition-all duration-150 active:scale-[0.97] aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:motion-safe:animate-[pulse-once_400ms_ease-out] data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+const histologyLabelClassName =
+  "min-h-11 h-auto min-w-0 whitespace-normal rounded-lg border-border bg-card px-3.5 py-2 text-sm font-medium leading-tight transition-all duration-150 active:scale-[0.97] aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:motion-safe:animate-[pulse-once_400ms_ease-out] data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+const fieldLabelClassName =
+  "pt-1 text-[0.8125rem] font-semibold text-foreground"
 
 export function NodalCalculator() {
   const [result, setResult] = useState<PredictionResult | null>(null)
+  const [resultKey, setResultKey] = useState(0)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
   const form = useForm<CalculatorFormValues>({
@@ -43,7 +46,7 @@ export function NodalCalculator() {
     mode: "onSubmit",
   })
 
-  const { control, handleSubmit, register, formState, reset } = form
+  const { control, handleSubmit, formState, reset } = form
 
   async function onSubmit(data: CalculatorFormValues) {
     setSubmitError(null)
@@ -58,6 +61,7 @@ export function NodalCalculator() {
       return
     }
 
+    setResultKey((k) => k + 1)
     setResult((await response.json()) as PredictionResult)
   }
 
@@ -76,41 +80,62 @@ export function NodalCalculator() {
       >
         <Card className="gap-0 rounded-lg py-0 shadow-xs">
           <CardHeader className="border-b border-border px-5 py-4">
-            <CardTitle>Patient variables</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <User className="size-[1.125rem] text-muted-foreground" />
+              Patient variables
+            </CardTitle>
           </CardHeader>
 
           <CardContent className="px-5 py-5">
             <fieldset className="space-y-5">
               <legend className="sr-only">Patient variables</legend>
 
+              {/* Age group */}
               <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <div className="space-y-1 pt-1">
-                  <Label htmlFor="ageYears">Age</Label>
-                  <p className="text-xs leading-5 text-muted-foreground">
-                    Whole number, 18–110 years.
-                  </p>
-                </div>
+                <Label id="age-label" className={fieldLabelClassName}>
+                  Age
+                </Label>
                 <div className="space-y-2">
-                  <Input
-                    id="ageYears"
-                    type="text"
-                    inputMode="numeric"
-                    autoComplete="off"
-                    placeholder="62"
-                    className={controlClassName}
-                    aria-invalid={!!formState.errors.ageYears}
-                    {...register("ageYears")}
+                  <Controller
+                    name="ageGroup"
+                    control={control}
+                    render={({ field }) => (
+                      <ToggleGroup
+                        value={field.value ? [field.value] : []}
+                        onValueChange={(value) => field.onChange(value[0] ?? "")}
+                        variant="outline"
+                        size="lg"
+                        spacing={2}
+                        className={`${choiceGroupClassName} grid-cols-2 md:grid-cols-4`}
+                        aria-labelledby="age-label"
+                        aria-invalid={!!formState.errors.ageGroup}
+                      >
+                        <ToggleGroupItem value="<50" className={choiceLabelClassName}>
+                          &lt;50
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="50-64" className={choiceLabelClassName}>
+                          50–64
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="65-79" className={choiceLabelClassName}>
+                          65–79
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="80+" className={choiceLabelClassName}>
+                          80+
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    )}
                   />
-                  {formState.errors.ageYears?.message ? (
+                  {formState.errors.ageGroup?.message ? (
                     <p className="text-xs font-medium text-destructive" role="alert">
-                      {formState.errors.ageYears.message}
+                      {formState.errors.ageGroup.message}
                     </p>
                   ) : null}
                 </div>
               </div>
 
+              {/* Sex */}
               <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <Label id="sex-label" className="pt-1">
+                <Label id="sex-label" className={fieldLabelClassName}>
                   Sex
                 </Label>
                 <div className="space-y-2">
@@ -150,15 +175,80 @@ export function NodalCalculator() {
 
         <Card className="gap-0 rounded-lg py-0 shadow-xs">
           <CardHeader className="border-b border-border px-5 py-4">
-            <CardTitle>Tumor variables</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Microscope className="size-[1.125rem] text-muted-foreground" />
+              Tumor variables
+            </CardTitle>
           </CardHeader>
 
-          <CardContent className="px-5 py-5">
-            <fieldset className="space-y-5">
+          <CardContent className="p-0">
+            <fieldset className="divide-y divide-border">
               <legend className="sr-only">Tumor pathology variables</legend>
 
-              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <Label id="tStage-label" className="pt-1">
+              {/* Histology */}
+              <div className="grid gap-2 px-5 py-5 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
+                <Label id="histology-label" className={fieldLabelClassName}>
+                  Histology
+                </Label>
+                <div className="space-y-2">
+                  <Controller
+                    name="histology"
+                    control={control}
+                    render={({ field }) => (
+                      <ToggleGroup
+                        value={field.value ? [field.value] : []}
+                        onValueChange={(value) => field.onChange(value[0] ?? "")}
+                        variant="outline"
+                        size="lg"
+                        spacing={2}
+                        className={`${choiceGroupClassName} grid-cols-2`}
+                        aria-labelledby="histology-label"
+                        aria-invalid={!!formState.errors.histology}
+                      >
+                        <ToggleGroupItem
+                          value="carcinoid_tumors"
+                          className={histologyLabelClassName}
+                        >
+                          Carcinoid Tumors
+                        </ToggleGroupItem>
+                        <ToggleGroupItem
+                          value="goblet_cell"
+                          className={histologyLabelClassName}
+                        >
+                          Goblet Cell
+                        </ToggleGroupItem>
+                        <ToggleGroupItem
+                          value="mucinous_adenocarcinoma"
+                          className={`${histologyLabelClassName} col-span-2`}
+                        >
+                          Mucinous Adenocarcinoma
+                        </ToggleGroupItem>
+                        <ToggleGroupItem
+                          value="nonmucinous_adenocarcinoma"
+                          className={`${histologyLabelClassName} col-span-2`}
+                        >
+                          Non-mucinous Adenocarcinoma
+                        </ToggleGroupItem>
+                        <ToggleGroupItem
+                          value="signet_cell"
+                          className={histologyLabelClassName}
+                        >
+                          Signet Cell
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    )}
+                  />
+                  {formState.errors.histology?.message ? (
+                    <p className="text-xs font-medium text-destructive" role="alert">
+                      {formState.errors.histology.message}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+
+              {/* T stage */}
+              <div className="grid gap-2 px-5 py-5 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
+                <Label id="tStage-label" className={fieldLabelClassName}>
                   Clinical T category
                 </Label>
                 <div className="space-y-2">
@@ -172,13 +262,10 @@ export function NodalCalculator() {
                         variant="outline"
                         size="lg"
                         spacing={2}
-                        className={`${choiceGroupClassName} grid-cols-3 md:grid-cols-5`}
+                        className={`${choiceGroupClassName} grid-cols-4`}
                         aria-labelledby="tStage-label"
                         aria-invalid={!!formState.errors.tStage}
                       >
-                        <ToggleGroupItem value="tx" className={choiceLabelClassName}>
-                          Tx
-                        </ToggleGroupItem>
                         <ToggleGroupItem value="t1" className={choiceLabelClassName}>
                           T1
                         </ToggleGroupItem>
@@ -202,8 +289,9 @@ export function NodalCalculator() {
                 </div>
               </div>
 
-              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <Label id="grade-label" className="pt-1">
+              {/* Grade */}
+              <div className="grid gap-2 px-5 py-5 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
+                <Label id="grade-label" className={fieldLabelClassName}>
                   Histologic grade
                 </Label>
                 <div className="space-y-2">
@@ -217,13 +305,10 @@ export function NodalCalculator() {
                         variant="outline"
                         size="lg"
                         spacing={2}
-                        className={`${choiceGroupClassName} grid-cols-3 md:grid-cols-5`}
+                        className={`${choiceGroupClassName} grid-cols-4`}
                         aria-labelledby="grade-label"
                         aria-invalid={!!formState.errors.grade}
                       >
-                        <ToggleGroupItem value="gx" className={choiceLabelClassName}>
-                          Gx
-                        </ToggleGroupItem>
                         <ToggleGroupItem value="g1" className={choiceLabelClassName}>
                           G1
                         </ToggleGroupItem>
@@ -247,8 +332,9 @@ export function NodalCalculator() {
                 </div>
               </div>
 
-              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <Label id="lvi-label" className="pt-1">
+              {/* LVI */}
+              <div className="grid gap-2 px-5 py-5 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
+                <Label id="lvi-label" className={fieldLabelClassName}>
                   Lymphovascular invasion
                 </Label>
                 <div className="space-y-2">
@@ -262,7 +348,7 @@ export function NodalCalculator() {
                         variant="outline"
                         size="lg"
                         spacing={2}
-                        className={`${choiceGroupClassName} grid-cols-3`}
+                        className={`${choiceGroupClassName} grid-cols-2`}
                         aria-labelledby="lvi-label"
                         aria-invalid={!!formState.errors.lymphovascularInvasion}
                       >
@@ -271,9 +357,6 @@ export function NodalCalculator() {
                         </ToggleGroupItem>
                         <ToggleGroupItem value="yes" className={choiceLabelClassName}>
                           Yes
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value="unknown" className={choiceLabelClassName}>
-                          Unknown
                         </ToggleGroupItem>
                       </ToggleGroup>
                     )}
@@ -293,7 +376,7 @@ export function NodalCalculator() {
           <Button
             type="submit"
             size="lg"
-            className="h-11 w-full px-5 sm:w-auto"
+            className="h-11 w-full px-5 transition-all duration-150 active:scale-[0.97] sm:w-auto"
             disabled={formState.isSubmitting}
           >
             {formState.isSubmitting ? "Estimating..." : "Estimate risk"}
@@ -302,7 +385,7 @@ export function NodalCalculator() {
             type="button"
             variant="outline"
             size="lg"
-            className="h-11 w-full px-5 sm:w-auto"
+            className="h-11 w-full px-5 transition-all duration-150 active:scale-[0.97] sm:w-auto"
             onClick={onReset}
             disabled={formState.isSubmitting}
           >
@@ -317,7 +400,7 @@ export function NodalCalculator() {
       </form>
 
       <aside className="min-w-0 motion-safe:animate-[fade-up_520ms_ease-out_160ms_both] lg:sticky lg:top-6">
-        <ResultPanel result={result} />
+        <ResultPanel result={result} resultKey={resultKey} />
       </aside>
     </div>
   )

@@ -1,0 +1,42 @@
+{
+  "intercept": -2.9989,
+
+  "age": {
+    "<50":   0,
+    "50-64": -0.0397,
+    "65-79": -0.0794,
+    "80+":   -0.0710
+  },
+
+  "sex": {
+    "female": 0,
+    "male":   0.0297
+  },
+
+  "histology": {
+    "carcinoid_tumors":            0,
+    "goblet_cell":                -0.7251,
+    "mucinous_adenocarcinoma":    -0.8392,
+    "nonmucinous_adenocarcinoma": -0.4204,
+    "signet_cell":                -0.2081
+  },
+
+  "tStage": {
+    "t1": 0,
+    "t2": 1.2199,
+    "t3": 1.1083,
+    "t4": 1.8744
+  },
+
+  "grade": {
+    "g1": 0,
+    "g2": 0.6306,
+    "g3": 1.3947,
+    "g4": 1.2640
+  },
+
+  "lymphovascularInvasion": {
+    "no":  0,
+    "yes": 1.8818
+  }
+}

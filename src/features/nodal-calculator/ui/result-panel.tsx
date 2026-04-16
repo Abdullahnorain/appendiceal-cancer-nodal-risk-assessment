@@ -1,3 +1,7 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -12,11 +16,40 @@ import type { PredictionResult } from "../model/types"
 
 type ResultPanelProps = {
   result: PredictionResult | null
+  resultKey: number
 }
 
-export function ResultPanel({ result }: ResultPanelProps) {
-  const pct = result ? (result.probability * 100).toFixed(1) : null
-  const meterValue = result ? Math.round(result.probability * 100) : 0
+function useCountUp(target: number, duration = 600) {
+  const [value, setValue] = useState(0)
+  const prevTarget = useRef(0)
+
+  useEffect(() => {
+    if (target === prevTarget.current) return
+    prevTarget.current = target
+
+    const start = performance.now()
+    const from = 0
+
+    function tick(now: number) {
+      const elapsed = now - start
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setValue(from + (target - from) * eased)
+
+      if (progress < 1) requestAnimationFrame(tick)
+    }
+
+    requestAnimationFrame(tick)
+  }, [target, duration])
+
+  return value
+}
+
+export function ResultPanel({ result, resultKey }: ResultPanelProps) {
+  const targetPct = result ? result.probability * 100 : 0
+  const animatedPct = useCountUp(targetPct)
+  const displayPct = result ? animatedPct.toFixed(1) : null
+  const meterValue = result ? Math.round(animatedPct) : 0
 
   if (!result) {
     return (
@@ -58,9 +91,10 @@ export function ResultPanel({ result }: ResultPanelProps) {
 
   return (
     <Card
+      key={resultKey}
       aria-labelledby="result-heading"
       aria-live="polite"
-      className="min-w-0 rounded-lg border-primary/25 shadow-sm"
+      className="min-w-0 rounded-lg border-primary/25 shadow-sm motion-safe:animate-[result-enter_500ms_ease-out_both]"
     >
       <CardHeader>
         <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
@@ -71,20 +105,20 @@ export function ResultPanel({ result }: ResultPanelProps) {
 
       <CardContent className="space-y-5">
         <div className="min-w-0">
-          <p className="text-6xl font-semibold tracking-tight text-foreground tabular-nums">
-            {pct}%
+          <p className="text-6xl font-semibold tracking-tight text-foreground tabular-nums motion-safe:animate-[count-up_400ms_ease-out_200ms_both]">
+            {displayPct}%
           </p>
           {result.modelStatus === "specification_pending_verification" ? (
             <Badge
               variant="secondary"
-              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start"
+              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start motion-safe:animate-[fade-up_400ms_ease-out_350ms_both]"
             >
               Implementation: verify coefficient correspondence with the primary publication.
             </Badge>
           ) : (
             <Badge
               variant="secondary"
-              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start"
+              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start motion-safe:animate-[fade-up_400ms_ease-out_350ms_both]"
             >
               Coefficients per primary publication table.
             </Badge>
@@ -95,7 +129,7 @@ export function ResultPanel({ result }: ResultPanelProps) {
           <Progress
             value={meterValue}
             aria-label="Estimated nodal metastasis probability"
-            aria-valuetext={`${pct}% estimated probability`}
+            aria-valuetext={`${displayPct}% estimated probability`}
           />
           <div className="flex justify-between text-[0.7rem] font-medium text-muted-foreground tabular-nums">
             <span>0%</span>
@@ -106,7 +140,7 @@ export function ResultPanel({ result }: ResultPanelProps) {
 
         <Separator />
 
-        <dl className="grid gap-3 text-sm">
+        <dl className="grid gap-3 text-sm motion-safe:animate-[fade-up_400ms_ease-out_450ms_both]">
           <div className="flex items-center justify-between gap-4">
             <dt className="text-muted-foreground">Model version</dt>
             <dd className="font-medium text-foreground">{result.modelVersion}</dd>

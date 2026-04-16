@@ -1,71 +1,82 @@
 /**
  * MODEL PARAMETER SET UP
  *
- * What you may change: ONLY the numeric values in the single block below that is
- * marked "YOU EDIT HERE". Those are the digits after `=` and the numbers on the
- * right of `:` in the tables.
+ * All model weights live in model-weights.json — edit numbers there.
+ * This file reads, validates, and re-exports them for the rest of the app.
  *
- * What you must not change: the `import` line, any names (LOGISTIC_INTERCEPT,
- * tx:, g1:, no:, etc.), punctuation, or anything below the "END YOU EDIT HERE"
- * line — that region is background text only.
- *
- * Math and forms live in logistic-nodal-model.ts and predict.ts (developers).
+ * Researchers / non-developers: open model-weights.json and change numbers only.
+ * Developers: if the model structure changes, update the Zod schema below.
  */
 
+import { z } from "zod"
+
 import type { ModelInput } from "./types"
+import weights from "./model-weights.json"
 
-// =============================================================================
-// ▼▼▼ YOU EDIT HERE — numbers only ▼▼▼
-//
-// Change digits only. Do not rename keys (tx, t1, no, yes, …) or constant names.
-// =============================================================================
+// ---------------------------------------------------------------------------
+// Validation — gives clear errors if model-weights.json is malformed
+// ---------------------------------------------------------------------------
 
-/** Starting point on the log-odds scale before other factors. */
-export const LOGISTIC_INTERCEPT = -1.1
+const weightsSchema = z.object({
+  intercept: z.number(),
+  age: z.object({
+    "<50": z.number(),
+    "50-64": z.number(),
+    "65-79": z.number(),
+    "80+": z.number(),
+  }),
+  sex: z.object({
+    female: z.number(),
+    male: z.number(),
+  }),
+  histology: z.object({
+    carcinoid_tumors: z.number(),
+    goblet_cell: z.number(),
+    mucinous_adenocarcinoma: z.number(),
+    nonmucinous_adenocarcinoma: z.number(),
+    signet_cell: z.number(),
+  }),
+  tStage: z.object({
+    t1: z.number(),
+    t2: z.number(),
+    t3: z.number(),
+    t4: z.number(),
+  }),
+  grade: z.object({
+    g1: z.number(),
+    g2: z.number(),
+    g3: z.number(),
+    g4: z.number(),
+  }),
+  lymphovascularInvasion: z.object({
+    no: z.number(),
+    yes: z.number(),
+  }),
+})
 
-/** Age is modeled as (age in years minus this) times the next line. */
-export const AGE_CENTER_YEARS = 60
+const validated = weightsSchema.parse(weights)
 
-/** Log-odds added per one year of age after subtracting AGE_CENTER_YEARS. */
-export const AGE_LOG_ODDS_PER_YEAR = 0.012
+// ---------------------------------------------------------------------------
+// Re-exports — the rest of the app imports these, not the JSON directly
+// ---------------------------------------------------------------------------
 
-/** T stage: number on each line is extra log-odds for that stage vs reference. */
-export const T_STAGE_LOG_ODDS: Record<ModelInput["tStage"], number> = {
-  tx: 0,
-  t1: 0,
-  t2: 0.25,
-  t3: 0.55,
-  t4: 1.05,
-}
+export const LOGISTIC_INTERCEPT: number = validated.intercept
 
-/** Grade: number on each line is extra log-odds for that grade vs reference. */
-export const GRADE_LOG_ODDS: Record<ModelInput["grade"], number> = {
-  gx: 0,
-  g1: 0,
-  g2: 0.2,
-  g3: 0.55,
-  g4: 0.65,
-}
+export const AGE_GROUP_LOG_ODDS: Record<ModelInput["ageGroup"], number> =
+  validated.age
 
-/** LVI: number on each line is extra log-odds for that answer vs reference. */
+export const HISTOLOGY_LOG_ODDS: Record<ModelInput["histology"], number> =
+  validated.histology
+
+export const T_STAGE_LOG_ODDS: Record<ModelInput["tStage"], number> =
+  validated.tStage
+
+export const GRADE_LOG_ODDS: Record<ModelInput["grade"], number> =
+  validated.grade
+
 export const LYMPHOVASCULAR_INVASION_LOG_ODDS: Record<
   ModelInput["lymphovascularInvasion"],
   number
-> = {
-  no: 0,
-  yes: 1.35,
-  unknown: 0.15,
-}
+> = validated.lymphovascularInvasion
 
-/** Extra log-odds for male vs female (reference: female). */
-export const MALE_VERSUS_FEMALE_LOG_ODDS = 0.08
-
-// =============================================================================
-// ▲▲▲ END YOU EDIT HERE ▲▲▲
-// =============================================================================
-//
-// --- Reference (read only; does not change the app) ---
-// Source: Day RW et al., Ann Surg 2021;274(1):155-161.
-// DOI: 10.1097/SLA.0000000000003501 | PubMed: https://pubmed.ncbi.nlm.nih.gov/31361626/
-// Confirm each coefficient against the primary publication tables before marking the model manuscript_concordant in logistic-nodal-model.ts.
-// New form answers need a developer to add a row above — do not invent numbers.
+export const MALE_VERSUS_FEMALE_LOG_ODDS: number = validated.sex.male
