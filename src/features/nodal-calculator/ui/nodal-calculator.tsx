@@ -29,9 +29,9 @@ import { ResultPanel } from "./result-panel"
 
 const choiceGroupClassName = "grid w-full gap-2"
 const choiceLabelClassName =
-  "h-11 min-w-0 rounded-lg border-border bg-card px-3.5 text-sm font-medium transition-all duration-150 active:scale-[0.97] aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:motion-safe:animate-[pulse-once_400ms_ease-out] data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+  "h-11 min-w-0 justify-center rounded-lg border-border bg-card px-5 text-sm font-medium transition-all duration-150 active:scale-[0.97] aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:motion-safe:animate-[pulse-once_400ms_ease-out] data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
 const histologyLabelClassName =
-  "min-h-11 h-auto min-w-0 whitespace-normal rounded-lg border-border bg-card px-3.5 py-2 text-sm font-medium leading-tight transition-all duration-150 active:scale-[0.97] aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:motion-safe:animate-[pulse-once_400ms_ease-out] data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+  "min-h-11 h-auto min-w-0 justify-center whitespace-normal rounded-lg border-border bg-card px-5 py-2 text-sm font-medium leading-tight text-center transition-all duration-150 active:scale-[0.97] aria-pressed:border-primary aria-pressed:bg-accent aria-pressed:text-accent-foreground aria-pressed:motion-safe:animate-[pulse-once_400ms_ease-out] data-[state=on]:border-primary data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
 const fieldLabelClassName =
   "pt-1 text-[0.8125rem] font-semibold text-foreground"
 
