@@ -1,5 +1,7 @@
 import type {
+  AgeGroupValue,
   GradeValue,
+  HistologyValue,
   LviValue,
   SexValue,
   TStageValue,
@@ -14,8 +16,9 @@ export type ModelStatus =
   | "manuscript_concordant"
 
 export type ModelInput = {
-  ageYears: number
+  ageGroup: AgeGroupValue
   sex: SexValue
+  histology: HistologyValue
   tStage: TStageValue
   grade: GradeValue
   lymphovascularInvasion: LviValue

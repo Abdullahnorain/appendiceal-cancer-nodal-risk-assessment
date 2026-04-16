@@ -4,8 +4,9 @@ import type { ModelInput, PredictionResult } from "./types"
 
 function normalizeInput(input: CalculatorFormValues): ModelInput {
   return {
-    ageYears: Number.parseInt(input.ageYears, 10),
+    ageGroup: input.ageGroup as ModelInput["ageGroup"],
     sex: input.sex as ModelInput["sex"],
+    histology: input.histology as ModelInput["histology"],
     tStage: input.tStage as ModelInput["tStage"],
     grade: input.grade as ModelInput["grade"],
     lymphovascularInvasion:
@@ -20,7 +21,7 @@ function clampProbability(value: number) {
 
 /**
  * Stable prediction boundary used by the API route.
- * Model numbers: see MODEL PARAMETER SET UP in model-parameter-setup.ts.
+ * Model numbers: see model-weights.json.
  * Swap `activeNodalRiskModel` in active-model.ts if the implementation changes.
  */
 export function predict(input: CalculatorFormValues): PredictionResult {

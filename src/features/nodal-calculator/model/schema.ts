@@ -1,7 +1,9 @@
 import { z } from "zod"
 
 import {
+  ageGroupValues,
   gradeValues,
+  histologyValues,
   lviValues,
   sexValues,
   tStageValues,
@@ -9,32 +11,30 @@ import {
 
 export const calculatorSchema = z
   .object({
-    ageYears: z.string(),
+    ageGroup: z.string(),
     sex: z.string(),
+    histology: z.string(),
     tStage: z.string(),
     grade: z.string(),
     lymphovascularInvasion: z.string(),
   })
   .superRefine((data, ctx) => {
-    if (!data.ageYears.trim()) {
-      ctx.addIssue({ code: "custom", path: ["ageYears"], message: "Enter age" })
-    } else if (!/^\d+$/.test(data.ageYears)) {
-      ctx.addIssue({ code: "custom", path: ["ageYears"], message: "Use a whole number" })
-    } else {
-      const n = Number.parseInt(data.ageYears, 10)
-      if (n < 18 || n > 110) {
-        ctx.addIssue({
-          code: "custom",
-          path: ["ageYears"],
-          message: "Age must be between 18 and 110",
-        })
-      }
+    if (!data.ageGroup) {
+      ctx.addIssue({ code: "custom", path: ["ageGroup"], message: "Select age group" })
+    } else if (!(ageGroupValues as readonly string[]).includes(data.ageGroup)) {
+      ctx.addIssue({ code: "custom", path: ["ageGroup"], message: "Select age group" })
     }
 
     if (!data.sex) {
       ctx.addIssue({ code: "custom", path: ["sex"], message: "Select sex" })
     } else if (!(sexValues as readonly string[]).includes(data.sex)) {
       ctx.addIssue({ code: "custom", path: ["sex"], message: "Select sex" })
+    }
+
+    if (!data.histology) {
+      ctx.addIssue({ code: "custom", path: ["histology"], message: "Select histology" })
+    } else if (!(histologyValues as readonly string[]).includes(data.histology)) {
+      ctx.addIssue({ code: "custom", path: ["histology"], message: "Select histology" })
     }
 
     if (!data.tStage) {
@@ -67,8 +67,9 @@ export const calculatorSchema = z
 export type CalculatorFormValues = z.infer<typeof calculatorSchema>
 
 export const calculatorDefaultValues: CalculatorFormValues = {
-  ageYears: "",
+  ageGroup: "",
   sex: "",
+  histology: "",
   tStage: "",
   grade: "",
   lymphovascularInvasion: "",
