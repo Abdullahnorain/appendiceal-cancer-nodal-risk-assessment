@@ -63,7 +63,7 @@ Use this checklist if you change **which** variables exist, **allowed answers**,
 2. `**options.ts**`, `**schema.ts**`, `**types.ts**` — Keep allowed values, form validation, and `ModelInput` in sync.
 3. `**logistic-nodal-model.ts**` — Update the logit calculation if the model math changes.
 4. `**nodal-calculator.tsx**` — Update the form, toggle values, and labels.
-5. After coefficients are verified against the publication tables, set `status` to `manuscript_concordant` in `logistic-nodal-model.ts` (and bump `version` if appropriate).
+5. After coefficients are verified against the publication tables, set `status` to `internally_verified` in `logistic-nodal-model.ts` (and bump `version` if appropriate).
 
 **Technical reference (optional):** swap implementation in `active-model.ts`; prediction boundary in `predict.ts` and `src/app/api/nodal-risk/route.ts`; publication URL in `src/features/nodal-calculator/config/links.ts`.
 

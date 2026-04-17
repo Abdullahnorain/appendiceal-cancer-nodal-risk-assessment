@@ -8,12 +8,10 @@ import type {
 } from "./options"
 
 /**
- * specification_pending_verification: implementation not yet audited against publication tables.
- * manuscript_concordant: coefficients verified against the primary publication.
+ * verification_pending: implementation not yet audited against the publication tables.
+ * internally_verified: coefficients reviewed internally against the publication tables.
  */
-export type ModelStatus =
-  | "specification_pending_verification"
-  | "manuscript_concordant"
+export type ModelStatus = "verification_pending" | "internally_verified"
 
 export type ModelInput = {
   ageGroup: AgeGroupValue

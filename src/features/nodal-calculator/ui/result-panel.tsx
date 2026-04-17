@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardContent,
@@ -108,21 +107,6 @@ export function ResultPanel({ result, resultKey }: ResultPanelProps) {
           <p className="text-6xl font-semibold tracking-tight text-foreground tabular-nums motion-safe:animate-[count-up_400ms_ease-out_200ms_both]">
             {displayPct}%
           </p>
-          {result.modelStatus === "specification_pending_verification" ? (
-            <Badge
-              variant="secondary"
-              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start motion-safe:animate-[fade-up_400ms_ease-out_350ms_both]"
-            >
-              Implementation: verify coefficient correspondence with the primary publication.
-            </Badge>
-          ) : (
-            <Badge
-              variant="secondary"
-              className="mt-3 h-auto min-h-0 w-full max-w-full min-w-0 shrink whitespace-normal rounded-lg px-3.5 py-2 text-left text-balance items-start justify-start motion-safe:animate-[fade-up_400ms_ease-out_350ms_both]"
-            >
-              Coefficients per primary publication table.
-            </Badge>
-          )}
         </div>
 
         <div className="space-y-2">
@@ -157,8 +141,8 @@ export function ResultPanel({ result, resultKey }: ResultPanelProps) {
           <div className="flex items-center justify-between gap-4">
             <dt className="text-muted-foreground">Model status</dt>
             <dd className="text-right font-medium text-foreground">
-              {result.modelStatus === "manuscript_concordant"
-                ? "Manuscript-concordant implementation"
+              {result.modelStatus === "internally_verified"
+                ? "Verified internally against publication tables"
                 : "Pending verification against publication tables"}
             </dd>
           </div>

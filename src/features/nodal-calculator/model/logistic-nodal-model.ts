@@ -1,8 +1,8 @@
 /**
  * Logistic nodal risk model — equation assembly only.
  *
- * MODEL PARAMETER SET UP (numbers, manuscript alignment) lives in
- * model-weights.json. Researchers should edit that file, not this one.
+ * Model coefficients live in model-weights.json (validated by
+ * model-parameter-setup.ts). Researchers should edit that file, not this one.
  */
 
 import {
@@ -21,8 +21,8 @@ function logistic(logit: number) {
 }
 
 export const logisticNodalRiskModel: NodalRiskModel = {
-  version: "logistic-nodal-ann-surg-2021-0.2",
-  status: "specification_pending_verification",
+  version: "appendiceal-nodal-risk-apr-2026",
+  status: "internally_verified",
   predictProbability(input: ModelInput) {
     let logit = LOGISTIC_INTERCEPT
     logit += AGE_GROUP_LOG_ODDS[input.ageGroup]
