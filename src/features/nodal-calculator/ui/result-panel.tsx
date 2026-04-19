@@ -142,8 +142,8 @@ export function ResultPanel({ result, resultKey }: ResultPanelProps) {
             <dt className="text-muted-foreground">Model status</dt>
             <dd className="text-right font-medium text-foreground">
               {result.modelStatus === "internally_verified"
-                ? "Verified internally against publication tables"
-                : "Pending verification against publication tables"}
+                ? "Verified internally against reference tables"
+                : "Pending internal verification"}
             </dd>
           </div>
         </dl>

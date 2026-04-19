@@ -1,9 +1,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { PUBLICATION_URL } from "@/features/nodal-calculator/config/links"
 import { AppFooter } from "@/features/nodal-calculator/ui/app-footer"
 import { NodalCalculator } from "@/features/nodal-calculator/ui/nodal-calculator"
-import { ExternalLink } from "lucide-react"
 
 export default function Home() {
   return (
@@ -18,19 +16,13 @@ export default function Home() {
               Nodal Metastasis Risk Assessment in Appendiceal Cancer Patients
             </h1>
             <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
-              Derivation, validation, and performance metrics are reported in the primary publication.
+              Derivation, validation, and performance metrics will be available once the primary
+              publication is released.
             </p>
           </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            className="shrink-0 self-start"
-            nativeButton={false}
-            render={<a href={PUBLICATION_URL} target="_blank" rel="noopener noreferrer" />}
-          >
-            Primary publication
-            <ExternalLink data-icon="inline-end" aria-hidden />
+          <Button variant="outline" size="sm" className="shrink-0 self-start" disabled>
+            Publication pending
           </Button>
         </div>
       </header>

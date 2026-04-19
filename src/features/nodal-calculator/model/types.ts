@@ -8,8 +8,8 @@ import type {
 } from "./options"
 
 /**
- * verification_pending: implementation not yet audited against the publication tables.
- * internally_verified: coefficients reviewed internally against the publication tables.
+ * verification_pending: implementation not yet audited against the reference tables.
+ * internally_verified: coefficients reviewed internally against the reference tables.
  */
 export type ModelStatus = "verification_pending" | "internally_verified"
 

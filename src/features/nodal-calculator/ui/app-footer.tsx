@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { ExternalLink } from "lucide-react"
-
-import { PUBLICATION_URL } from "../config/links"
 
 export function AppFooter() {
   return (
@@ -9,25 +6,18 @@ export function AppFooter() {
       <div className="max-w-3xl space-y-3 leading-6">
         <p>
           This site is a <span className="font-medium text-foreground">computational implementation</span>{" "}
-          of the published model. It is not a medical device, is not FDA-cleared, and must not replace
-          clinical judgment. Confirm numerical outputs against the primary publication prior to clinical
-          use.
+          of the underlying model. It is not a medical device, is not FDA-cleared, and must not replace
+          clinical judgment.
         </p>
         <p>
-          Patient selection, variable definitions, and performance of the original model are described in
-          the linked manuscript; use that source to assess applicability to a given patient.
+          Patient selection, variable definitions, and performance characteristics will be available once
+          the primary publication is released; until then, use clinical judgment to assess applicability
+          to a given patient.
         </p>
       </div>
       <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-        <Button
-          variant="link"
-          size="sm"
-          className="h-auto justify-start px-0"
-          nativeButton={false}
-          render={<a href={PUBLICATION_URL} target="_blank" rel="noopener noreferrer" />}
-        >
-          Primary publication and cohort definitions
-          <ExternalLink data-icon="inline-end" aria-hidden />
+        <Button variant="link" size="sm" className="h-auto justify-start px-0" disabled>
+          Publication pending
         </Button>
         <p className="text-xs leading-relaxed text-muted-foreground">
           Developed by Drs. Wasif and Norain.
