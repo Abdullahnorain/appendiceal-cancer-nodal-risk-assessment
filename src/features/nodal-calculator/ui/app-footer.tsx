@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button"
 
+import { AUTHOR_CITATION_FULL } from "../config/authors"
+
 export function AppFooter() {
   return (
     <footer className="mt-auto flex flex-col gap-4 border-t border-border py-6 text-sm text-muted-foreground lg:flex-row lg:items-start lg:justify-between lg:gap-8">
@@ -19,7 +21,9 @@ export function AppFooter() {
         <Button variant="link" size="sm" className="h-auto justify-start px-0" disabled>
           Publication pending
         </Button>
-        {/* TODO: restore author attribution once final author list is confirmed. */}
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          {AUTHOR_CITATION_FULL}
+        </p>
       </div>
     </footer>
   )

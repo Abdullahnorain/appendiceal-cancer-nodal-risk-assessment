@@ -99,4 +99,6 @@ Then open **[http://localhost:3000](http://localhost:3000)** (if that port is in
 
 **Source model:** Day RW et al., *Ann Surg* 2021;274(1):155–161 | [PubMed](https://pubmed.ncbi.nlm.nih.gov/31361626/)
 
-Developed by Drs. Wasif and Norain.
+**Authors:** Tan P, Norain A, Chang Y-H, Wasif N.
+
+<!-- Author list canonical source: src/features/nodal-calculator/config/authors.ts — keep in sync. -->
