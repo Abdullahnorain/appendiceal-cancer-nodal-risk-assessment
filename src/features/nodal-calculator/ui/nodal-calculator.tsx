@@ -184,129 +184,14 @@ export function NodalCalculator() {
         <Card className="gap-0 rounded-lg py-0 shadow-xs">
           <CardHeader className="border-b border-border px-5 py-4">
             <CardTitle className="flex items-center gap-2">
-              <User className="size-[1.125rem] text-muted-foreground" />
-              Patient variables
-            </CardTitle>
-          </CardHeader>
-
-          <CardContent className="px-5 py-5">
-            <fieldset className="space-y-5">
-              <legend className="sr-only">Patient variables</legend>
-
-              {/* Age group */}
-              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <Label
-                  id="age-label"
-                  className={cn(
-                    fieldLabelClassName,
-                    "transition-colors duration-200",
-                    formState.errors.ageGroup && "text-destructive"
-                  )}
-                >
-                  Age
-                </Label>
-                <div>
-                  <Controller
-                    name="ageGroup"
-                    control={control}
-                    render={({ field }) => (
-                      <ToggleGroup
-                        value={field.value ? [field.value] : []}
-                        onValueChange={(value) => field.onChange(value[0] ?? "")}
-                        variant="outline"
-                        size="lg"
-                        spacing={2}
-                        className={`${choiceGroupClassName} grid-cols-2 md:grid-cols-4`}
-                        aria-labelledby="age-label"
-                        aria-invalid={!!formState.errors.ageGroup}
-                        aria-errormessage={
-                          formState.errors.ageGroup ? "age-group-error" : undefined
-                        }
-                      >
-                        <ToggleGroupItem value="<50" className={choiceLabelClassName}>
-                          &lt;50
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value="50-64" className={choiceLabelClassName}>
-                          50–64
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value="65-79" className={choiceLabelClassName}>
-                          65–79
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value="80+" className={choiceLabelClassName}>
-                          80+
-                        </ToggleGroupItem>
-                      </ToggleGroup>
-                    )}
-                  />
-                  {formState.errors.ageGroup?.message ? (
-                    <p id="age-group-error" className="sr-only" role="alert">
-                      {formState.errors.ageGroup.message}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-
-              {/* Sex */}
-              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
-                <Label
-                  id="sex-label"
-                  className={cn(
-                    fieldLabelClassName,
-                    "transition-colors duration-200",
-                    formState.errors.sex && "text-destructive"
-                  )}
-                >
-                  Sex
-                </Label>
-                <div>
-                  <Controller
-                    name="sex"
-                    control={control}
-                    render={({ field }) => (
-                      <ToggleGroup
-                        value={field.value ? [field.value] : []}
-                        onValueChange={(value) => field.onChange(value[0] ?? "")}
-                        variant="outline"
-                        size="lg"
-                        spacing={2}
-                        className={`${choiceGroupClassName} grid-cols-2`}
-                        aria-labelledby="sex-label"
-                        aria-invalid={!!formState.errors.sex}
-                        aria-errormessage={
-                          formState.errors.sex ? "sex-error" : undefined
-                        }
-                      >
-                        <ToggleGroupItem value="female" className={choiceLabelClassName}>
-                          Female
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value="male" className={choiceLabelClassName}>
-                          Male
-                        </ToggleGroupItem>
-                      </ToggleGroup>
-                    )}
-                  />
-                  {formState.errors.sex?.message ? (
-                    <p id="sex-error" className="sr-only" role="alert">
-                      {formState.errors.sex.message}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            </fieldset>
-          </CardContent>
-        </Card>
-
-        <Card className="gap-0 rounded-lg py-0 shadow-xs">
-          <CardHeader className="border-b border-border px-5 py-4">
-            <CardTitle className="flex items-center gap-2">
               <Microscope className="size-[1.125rem] text-muted-foreground" />
-              Tumor variables
+              Tumor Characteristics
             </CardTitle>
           </CardHeader>
 
           <CardContent className="p-0">
             <fieldset className="divide-y divide-border">
-              <legend className="sr-only">Tumor pathology variables</legend>
+              <legend className="sr-only">Tumor Characteristics</legend>
 
               {/* Histology */}
               <div className="grid gap-2 px-5 py-5 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
@@ -529,6 +414,121 @@ export function NodalCalculator() {
                   {formState.errors.lymphovascularInvasion?.message ? (
                     <p id="lvi-error" className="sr-only" role="alert">
                       {formState.errors.lymphovascularInvasion.message}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </fieldset>
+          </CardContent>
+        </Card>
+
+        <Card className="gap-0 rounded-lg py-0 shadow-xs">
+          <CardHeader className="border-b border-border px-5 py-4">
+            <CardTitle className="flex items-center gap-2">
+              <User className="size-[1.125rem] text-muted-foreground" />
+              Demographics
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="px-5 py-5">
+            <fieldset className="space-y-5">
+              <legend className="sr-only">Demographics</legend>
+
+              {/* Age group */}
+              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
+                <Label
+                  id="age-label"
+                  className={cn(
+                    fieldLabelClassName,
+                    "transition-colors duration-200",
+                    formState.errors.ageGroup && "text-destructive"
+                  )}
+                >
+                  Age
+                </Label>
+                <div>
+                  <Controller
+                    name="ageGroup"
+                    control={control}
+                    render={({ field }) => (
+                      <ToggleGroup
+                        value={field.value ? [field.value] : []}
+                        onValueChange={(value) => field.onChange(value[0] ?? "")}
+                        variant="outline"
+                        size="lg"
+                        spacing={2}
+                        className={`${choiceGroupClassName} grid-cols-2 md:grid-cols-4`}
+                        aria-labelledby="age-label"
+                        aria-invalid={!!formState.errors.ageGroup}
+                        aria-errormessage={
+                          formState.errors.ageGroup ? "age-group-error" : undefined
+                        }
+                      >
+                        <ToggleGroupItem value="<50" className={choiceLabelClassName}>
+                          &lt;50
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="50-64" className={choiceLabelClassName}>
+                          50–64
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="65-79" className={choiceLabelClassName}>
+                          65–79
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="80+" className={choiceLabelClassName}>
+                          80+
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    )}
+                  />
+                  {formState.errors.ageGroup?.message ? (
+                    <p id="age-group-error" className="sr-only" role="alert">
+                      {formState.errors.ageGroup.message}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+
+              {/* Sex */}
+              <div className="grid gap-2 sm:grid-cols-[minmax(8rem,0.85fr)_minmax(0,1.15fr)] sm:items-start sm:gap-5">
+                <Label
+                  id="sex-label"
+                  className={cn(
+                    fieldLabelClassName,
+                    "transition-colors duration-200",
+                    formState.errors.sex && "text-destructive"
+                  )}
+                >
+                  Sex
+                </Label>
+                <div>
+                  <Controller
+                    name="sex"
+                    control={control}
+                    render={({ field }) => (
+                      <ToggleGroup
+                        value={field.value ? [field.value] : []}
+                        onValueChange={(value) => field.onChange(value[0] ?? "")}
+                        variant="outline"
+                        size="lg"
+                        spacing={2}
+                        className={`${choiceGroupClassName} grid-cols-2`}
+                        aria-labelledby="sex-label"
+                        aria-invalid={!!formState.errors.sex}
+                        aria-errormessage={
+                          formState.errors.sex ? "sex-error" : undefined
+                        }
+                      >
+                        <ToggleGroupItem value="female" className={choiceLabelClassName}>
+                          Female
+                        </ToggleGroupItem>
+                        <ToggleGroupItem value="male" className={choiceLabelClassName}>
+                          Male
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    )}
+                  />
+                  {formState.errors.sex?.message ? (
+                    <p id="sex-error" className="sr-only" role="alert">
+                      {formState.errors.sex.message}
                     </p>
                   ) : null}
                 </div>
