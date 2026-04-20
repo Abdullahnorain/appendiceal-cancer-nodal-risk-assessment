@@ -19,9 +19,7 @@ export function AppFooter() {
         <Button variant="link" size="sm" className="h-auto justify-start px-0" disabled>
           Publication pending
         </Button>
-        <p className="text-xs leading-relaxed text-muted-foreground">
-          Developed by Drs. Wasif and Norain.
-        </p>
+        {/* TODO: restore author attribution once final author list is confirmed. */}
       </div>
     </footer>
   )
