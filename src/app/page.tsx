@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { AppFooter } from "@/features/nodal-calculator/ui/app-footer"
 import { NodalCalculator } from "@/features/nodal-calculator/ui/nodal-calculator"
+import { PublicationButton } from "@/features/nodal-calculator/ui/publication-button"
 
 export default function Home() {
   return (
@@ -21,9 +21,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Button variant="outline" size="sm" className="shrink-0 self-start" disabled>
-            Publication pending
-          </Button>
+          <PublicationButton className="self-start" />
         </div>
       </header>
 

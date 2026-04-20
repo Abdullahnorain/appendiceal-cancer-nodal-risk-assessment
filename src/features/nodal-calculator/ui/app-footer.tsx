@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-
 import { AUTHOR_CITATION_FULL } from "../config/authors"
+
+import { PublicationButton } from "./publication-button"
 
 export function AppFooter() {
   return (
@@ -18,9 +18,7 @@ export function AppFooter() {
         </p>
       </div>
       <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-        <Button variant="link" size="sm" className="h-auto justify-start px-0" disabled>
-          Publication pending
-        </Button>
+        <PublicationButton />
         <p className="text-xs leading-relaxed text-muted-foreground">
           {AUTHOR_CITATION_FULL}
         </p>
