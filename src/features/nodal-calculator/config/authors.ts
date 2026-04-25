@@ -6,7 +6,7 @@
  *   - src/features/nodal-calculator/ui/app-footer.tsx (uses AUTHOR_CITATION_FULL)
  *   - README.md (hand-synced; see the "Authors:" line near the bottom)
  *
- * Author order mirrors the publication byline. When the author list or
+ * Author order mirrors the project author list. When the author list or
  * ordering changes, update this array and the README line together.
  */
 

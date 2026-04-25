@@ -17,7 +17,7 @@ import weights from "./model-weights.json"
 // Validation — gives clear errors if model-weights.json is malformed
 // ---------------------------------------------------------------------------
 
-const weightsSchema = z.object({
+const subModelSchema = z.object({
   intercept: z.number(),
   age: z.object({
     "<50": z.number(),
@@ -28,13 +28,6 @@ const weightsSchema = z.object({
   sex: z.object({
     female: z.number(),
     male: z.number(),
-  }),
-  histology: z.object({
-    carcinoid_tumors: z.number(),
-    goblet_cell: z.number(),
-    mucinous_adenocarcinoma: z.number(),
-    nonmucinous_adenocarcinoma: z.number(),
-    signet_cell: z.number(),
   }),
   tStage: z.object({
     t1: z.number(),
@@ -54,29 +47,35 @@ const weightsSchema = z.object({
   }),
 })
 
+const weightsSchema = z.object({
+  version: z.string(),
+  models: z.object({
+    carcinoid_tumors: subModelSchema,
+    goblet_cell: subModelSchema,
+    mucinous_adenocarcinoma: subModelSchema,
+    nonmucinous_adenocarcinoma: subModelSchema,
+    signet_cell: subModelSchema,
+  }),
+})
+
 const validated = weightsSchema.parse(weights)
 
 // ---------------------------------------------------------------------------
 // Re-exports — the rest of the app imports these, not the JSON directly
 // ---------------------------------------------------------------------------
 
-export const LOGISTIC_INTERCEPT: number = validated.intercept
+export const MODEL_VERSION: string = validated.version
 
-export const AGE_GROUP_LOG_ODDS: Record<ModelInput["ageGroup"], number> =
-  validated.age
+export type HistologySpecificModel = {
+  intercept: number
+  age: Record<ModelInput["ageGroup"], number>
+  sex: Record<ModelInput["sex"], number>
+  tStage: Record<ModelInput["tStage"], number>
+  grade: Record<ModelInput["grade"], number>
+  lymphovascularInvasion: Record<ModelInput["lymphovascularInvasion"], number>
+}
 
-export const HISTOLOGY_LOG_ODDS: Record<ModelInput["histology"], number> =
-  validated.histology
-
-export const T_STAGE_LOG_ODDS: Record<ModelInput["tStage"], number> =
-  validated.tStage
-
-export const GRADE_LOG_ODDS: Record<ModelInput["grade"], number> =
-  validated.grade
-
-export const LYMPHOVASCULAR_INVASION_LOG_ODDS: Record<
-  ModelInput["lymphovascularInvasion"],
-  number
-> = validated.lymphovascularInvasion
-
-export const MALE_VERSUS_FEMALE_LOG_ODDS: number = validated.sex.male
+export const MODELS_BY_HISTOLOGY: Record<
+  ModelInput["histology"],
+  HistologySpecificModel
+> = validated.models
